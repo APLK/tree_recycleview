@@ -90,18 +90,12 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCheckedChanged(Boolean isChecked) {
+            public void onCheckedChanged(TreeNode selectedNode, Boolean isChecked) {
                 Log.i("1", "isChecked0=" + isChecked);
                 //设置子元素都是isChecked
-                if (mNodes != null) {
-                    for (int i = 0; i < mNodes.size(); i++) {
-                        if (mNodes.get(i).getChildList() != null) {
-                            for (int j = 0; j < mNodes.get(i).getChildList().size(); j++) {
-                                ((TreeData) ((TreeNode) (mNodes.get(i).getChildList().get(j))).getContent()).setChecked(!isChecked);
-                            }
-                        } else {
-                            ((TreeData) mNodes.get(i).getContent()).setChecked(!isChecked);
-                        }
+                if (selectedNode != null) {
+                    for (int i = 0; i < selectedNode.getChildList().size(); i++) {
+                        ((TreeData) ((TreeNode) (selectedNode.getChildList().get(i))).getContent()).setChecked(!isChecked);
                     }
                 }
                 adapter.notifyDataSetChanged();
