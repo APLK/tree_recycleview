@@ -124,12 +124,14 @@ public class TreeViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 Log.i("1", "itemView=" + data.getChecked() + ",pos=" + holder.getLayoutPosition() + ",pos1=" + position);
                 if (!displayNodes.get(holder.getLayoutPosition()).isLeaf()) {//含有子元素时
                     if (onTreeNodeListener != null) {
-                        onTreeNodeListener.onCheckedChanged(displayNodes.get(holder.getLayoutPosition()),data.getChecked());
+                        onTreeNodeListener.onCheckedChanged(displayNodes.get(holder.getLayoutPosition()), data.getChecked());
                     }
                 }
                 data.setChecked(!data.getChecked());
+                notifyDataSetChanged();
             }
         });
+        Log.i("1", "viewBinder=" + viewBinders.size());
         for (TreeViewBinder viewBinder : viewBinders) {
             if (viewBinder.getLayoutId() == displayNodes.get(position).getContent().getLayoutId())
                 viewBinder.bindView(holder, position, displayNodes.get(position));
@@ -205,7 +207,7 @@ public class TreeViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
          */
         void onToggle(boolean isExpand, RecyclerView.ViewHolder holder);
 
-        void onCheckedChanged( TreeNode selectedNode ,Boolean isChecked);
+        void onCheckedChanged(TreeNode selectedNode, Boolean isChecked);
     }
 
     public void refresh(List<TreeNode> treeNodes) {

@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView tv_sure;
     private List<TreeNode> mNodes;
     private ArrayList<TreeData> selectDataList;
-    private TreeNodeBinder mTreeNodeBinder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private void initData() {
         selectDataList = new ArrayList<>();
         mNodes = new ArrayList<>();
-        TreeNode<TreeData> app = new TreeNode<>(new TreeData("testMain1", true));
+        TreeNode<TreeData> app = new TreeNode<>(new TreeData("testMain1", false));
         mNodes.add(app);
         app.addChild(
                 new TreeNode<>(new TreeData("testChild11", false))
@@ -56,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 .addChild(new TreeNode<>(new TreeData("testChild25", false)))
                 .addChild(new TreeNode<>(new TreeData("testChild26", false)))
                 .addChild(new TreeNode<>(new TreeData("testChild27", false)));
-        TreeNode<TreeData> app3 = new TreeNode<>(new TreeData("testMain3", true));
+        TreeNode<TreeData> app3 = new TreeNode<>(new TreeData("testMain3", false));
         mNodes.add(app3);
         app3.addChild(
                 new TreeNode<>(new TreeData("testChild31", false))
@@ -84,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             public void onToggle(boolean isExpand, RecyclerView.ViewHolder holder) {
                 TreeNodeBinder.ViewHolder dirViewHolder = (TreeNodeBinder.ViewHolder) holder;
                 final ImageView ivArrow = dirViewHolder.getIvArrow();
-                int rotateDegree = isExpand ? 90 : -90;
+                int rotateDegree = isExpand ? 180 : -180;
                 ivArrow.animate().rotationBy(rotateDegree)
                         .start();
             }
@@ -98,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                         ((TreeData) ((TreeNode) (selectedNode.getChildList().get(i))).getContent()).setChecked(!isChecked);
                     }
                 }
-                adapter.notifyDataSetChanged();
+//                adapter.notifyDataSetChanged();
             }
         });
         rv.setAdapter(adapter);
