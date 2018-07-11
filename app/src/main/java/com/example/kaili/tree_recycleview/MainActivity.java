@@ -116,23 +116,31 @@ public class MainActivity extends AppCompatActivity {
                 selectDataList.clear();
                 if (mNodes != null) {
                     for (int i = 0; i < mNodes.size(); i++) {
-                        if (mNodes.get(i).getChildList() != null) {
+                        if (!mNodes.get(i).isLeaf()) {
+                            ((TreeData) ((TreeNode) (mNodes.get(i))).getContent()).setChecked(false);
                             for (int j = 0; j < mNodes.get(i).getChildList().size(); j++) {
                                 ((TreeData) ((TreeNode) (mNodes.get(i).getChildList().get(j))).getContent()).setChecked(false);
                             }
                         }
                     }
                 }
+                adapter.notifyDataSetChanged();
             }
         });
         tv_sure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (int i = 0; i < mNodes.size(); i++) {
-                    if (mNodes.get(i).getChildList() != null) {
-                        for (int j = 0; j < mNodes.get(i).getChildList().size(); j++) {
-                            if (((TreeData) ((TreeNode) (mNodes.get(i).getChildList().get(j))).getContent()).isChecked) {
-                                selectDataList.add(((TreeData) ((TreeNode) (mNodes.get(i).getChildList().get(j))).getContent()));
+                if (mNodes != null) {
+                    for (int i = 0; i < mNodes.size(); i++) {
+                        if (!mNodes.get(i).isLeaf()) {
+                            Log.i("1", "sb222=" + ((TreeData) ((TreeNode) (mNodes.get(i))).getContent()).getChecked());
+                            if (((TreeData) ((TreeNode) (mNodes.get(i))).getContent()).getChecked()) {
+                                selectDataList.add(((TreeData) ((TreeNode) (mNodes.get(i))).getContent()));
+                            }
+                            for (int j = 0; j < mNodes.get(i).getChildList().size(); j++) {
+                                if (((TreeData) ((TreeNode) (mNodes.get(i).getChildList().get(j))).getContent()).getChecked()) {
+                                    selectDataList.add(((TreeData) ((TreeNode) (mNodes.get(i).getChildList().get(j))).getContent()));
+                                }
                             }
                         }
                     }
@@ -142,6 +150,8 @@ public class MainActivity extends AppCompatActivity {
                     sb.append(selectDataList.get(i).name).append(",");
                 }
                 Log.i("1", "sb=" + sb);
+                //TODO 跳转的功能,携带数据进行跳转
+                selectDataList.clear();
             }
         });
     }

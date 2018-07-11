@@ -122,7 +122,7 @@ public class TreeViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             public void onClick(View v) {
                 TreeData data = (TreeData) displayNodes.get(holder.getLayoutPosition()).getContent();
                 Log.i("1", "itemView=" + data.getChecked() + ",pos=" + holder.getLayoutPosition() + ",pos1=" + position);
-                if (!displayNodes.get(holder.getLayoutPosition()).isLeaf()) {//是父元素时
+                if (!displayNodes.get(holder.getLayoutPosition()).isLeaf()) {//含有子元素时
                     if (onTreeNodeListener != null) {
                         onTreeNodeListener.onCheckedChanged(displayNodes.get(holder.getLayoutPosition()),data.getChecked());
                     }
